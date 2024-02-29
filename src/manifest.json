@@ -1,0 +1,17 @@
+{
+    "manifest_version": 3,
+    "name": "My Chrome Extension",
+    "version": "1.0",
+    "description": "Description of my Chrome extension.",
+    "action": {
+        "default_popup": "index.html",
+        "default_icon": {
+            "16": "assets/favicon.png",
+            "48": "assets/favicon.png",
+            "128": "assets/favicon.png"
+        }
+    },
+    "permissions": [
+        "activeTab"
+    ]
+}
