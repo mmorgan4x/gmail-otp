@@ -3,13 +3,14 @@
     "name": "My Chrome Extension",
     "version": "1.0",
     "description": "Description of my Chrome extension.",
+    "icons": {
+        "16": "assets/icon.png",
+        "48": "assets/icon.png",
+        "128": "assets/icon.png"
+    },
     "action": {
         "default_popup": "index.html",
-        "default_icon": {
-            "16": "assets/favicon.png",
-            "48": "assets/favicon.png",
-            "128": "assets/favicon.png"
-        }
+        "default_icon": "assets/icon.png"
     },
     "permissions": [
         "activeTab"
