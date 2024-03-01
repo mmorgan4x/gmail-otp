@@ -13,6 +13,16 @@
         "default_icon": "assets/icon.png"
     },
     "permissions": [
-        "activeTab"
-    ]
+        "activeTab",
+        "identity",
+        "identity.email"
+    ],
+    "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAuQXbRiO6LAs0D6RQXw5/m4w/Dw3Vsug4Bg00OQGYvg9TRKEjzdo6aZ8ywdLyXqJ/k9kX+yhGDjkkBz7Jmo/E208kVxqEQ60x2VeyE9m/nwat4hUgd1kEq6wqPQrnD7dkjLPV2SO7oXbLz2gkAhYi6At2hnayDR+JK4zfAP4w6xObaD8oqxHXXaBjeRzqK2H5NE+iuVRJuvA+UbzYDEScf+ryHmwPTwkNt2ebYhPGy8jjadP4VZBwd3DiWXiFaMnDKfxAnfxWjpOgXqd+B7dppIXO0U4Fn4rCs/upTnM6/f3nSLq+b3C/pvSJQtihhMI3ZnxoF6qh00ueqMru2tEClwIDAQAB",
+    "oauth2": {
+        "client_id": "732667058697-p4s4cb64l0rdjdbtd0enmd01a1lvimmn.apps.googleusercontent.com",
+        "scopes": [
+            "https://www.googleapis.com/auth/gmail.readonly",
+            "https://www.googleapis.com/auth/userinfo.profile"
+        ]
+    }
 }

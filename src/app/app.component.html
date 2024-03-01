@@ -5,8 +5,9 @@
   ></asl-google-signin-button>
 </div> -->
 <main class="p-3">
+  hello {{ userInfo?.name }}
   <div>
-    <button (click)="getAccessToken().subscribe()">token</button>
-    {{ codes }}
+    <button (click)="click()">click</button>
+    <div *ngFor="let message of messages">{{ message.id }}</div>
   </div>
 </main>

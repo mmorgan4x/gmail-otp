@@ -1,18 +1,7 @@
 import { Component, } from '@angular/core';
-import { GoogleLoginProvider, SocialAuthService, SocialUser, } from '@abacritt/angularx-social-login';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable, catchError, forkJoin, from, map, mergeMap, of, repeat, retry, retryWhen, switchMap, tap, timer } from 'rxjs';
-// provider: string;
-// id: string;
-// email: string;
-// name: string;
-// photoUrl: string;
-// firstName: string;
-// lastName: string;
-// authToken: string;
-// idToken: string;
-// authorizationCode: string;
-// response: any;
+import { ApiService } from './api.service';
+import { gmail_v1, oauth2_v2 } from 'googleapis';
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -20,74 +9,63 @@ import { Observable, catchError, forkJoin, from, map, mergeMap, of, repeat, retr
 })
 export class AppComponent {
 
-  user!: SocialUser;
-  isLoggedin?: boolean;
   codes: string[]
+  email: string
+  userInfo?: oauth2_v2.Schema$Userinfo;
+  messages?: gmail_v1.Schema$Message[];
 
-  get accessToken() { return localStorage.getItem('accessToken') || '' };
-  set accessToken(val) { localStorage.setItem('accessToken', val) };
+  constructor(private api: ApiService) { }
 
+  async ngOnInit() {
+    this.email = (await chrome.identity.getProfileUserInfo()).email;
 
-  constructor(private authService: SocialAuthService, private http: HttpClient) { }
-
-  ngOnInit() {
-    // this.authService.authState.subscribe((user: SocialUser) => {
-    //   console.log(user)
-    //   this.user = user;
-    //   this.isLoggedin = (user != null);
-    //   this.getAccessToken();
-    // });
-    this.fetchOTPCode().subscribe(t => this.codes = t)
+    chrome.identity.getAuthToken({ interactive: true }, async (token) => {
+      let user = await this.api.getUserInfo(token as string);
+      console.log(user)
+    })
   }
 
-  // getAccessToken(): void {
-  //   this.authService.getAccessToken(GoogleLoginProvider.PROVIDER_ID).then(accessToken => {
-  //     this.accessToken = accessToken + 'dd'
-  //     this.fetchOTPCode().subscribe(t => this.codes = t);
-  //   });
-  // }
+  async click() {
+    chrome.identity.getAuthToken({ interactive: true }, async (token) => {
 
-  getAccessToken() {
-    return from(this.authService.getAccessToken(GoogleLoginProvider.PROVIDER_ID)).pipe(tap(t => console.log('token', t)), tap(t => this.accessToken = t))
-  }
+      let emails = await this.api.getEmails(token as string);
+      this.messages = emails.messages;
+      console.log(emails.messages)
 
-  logOut(): void {
-    this.authService.signOut();
-  }
+      // let req = this.http.get(requestUrl, {
+      //   headers: { Authorization: `Bearer ${token}` },
+      // }).pipe(
+      //   tap(t => console.log('resp', t)),
+      //   mergeMap((response: any) => {
+      //     const messages = response.messages;
+      //     const messageIds = messages.map((message: any) => message.id);
+      //     const messageRequests = messageIds.map((id: string) =>
+      //       this.http.get(`https://www.googleapis.com/gmail/v1/users/me/messages/${id}`, {
+      //         headers: { Authorization: `Bearer ${token}` },
+      //       })
+      //     );
 
-  fetchOTPCode(): Observable<string[]> {
-    const requestUrl = 'https://www.googleapis.com/gmail/v1/users/me/messages?maxResults=10';
+      //     return forkJoin(messageRequests);
+      //   }),
+      //   map((emails: any) => {
+      //     console.log('emails', emails)
+      //     const otpCodes: string[] = [];
 
-    return this.http.get(requestUrl, {
-      headers: { Authorization: `Bearer ${this.accessToken}` },
-    }).pipe(
-      tap(t => console.log('resp', t)),
-      mergeMap((response: any) => {
-        const messages = response.messages;
-        const messageIds = messages.map((message: any) => message.id);
-        const messageRequests = messageIds.map((id: string) =>
-          this.http.get(`https://www.googleapis.com/gmail/v1/users/me/messages/${id}`, {
-            headers: { Authorization: `Bearer ${this.accessToken}` },
-          })
-        );
+      //     emails.forEach((email: any) => {
 
-        return forkJoin(messageRequests);
-      }),
-      map((emails: any) => {
-        console.log('emails', emails)
-        const otpCodes: string[] = [];
+      //       const otpMatch = email.snippet.match(/\b\d{6}\b/);
 
-        emails.forEach((email: any) => {
+      //       if (otpMatch) {
+      //         otpCodes.push(otpMatch[0]);
+      //       }
+      //     });
 
-          const otpMatch = email.snippet.match(/\b\d{6}\b/);
+      //     return otpCodes;
+      //   }),
+      // );
 
-          if (otpMatch) {
-            otpCodes.push(otpMatch[0]);
-          }
-        });
+      // req.subscribe(t => console.log(t))
+    })
 
-        return otpCodes;
-      }),
-    );
   }
 }
