@@ -1,6 +1,7 @@
 import { ChangeDetectorRef, Component, } from '@angular/core';
 import { ApiService } from './api.service';
 import { Gmail, Oauth2 } from './types';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-root',
@@ -36,12 +37,11 @@ export class AppComponent {
     this.codes = this.messages.map(msg => {
       return {
         msg: msg,
+        date: moment(+msg.internalDate).fromNow(),
         unread: msg.labelIds.includes('UNREAD'),
+        from: this.parseEmail(this.getHeader(msg, 'From')),
         subject: this.getHeader(msg, 'Subject'),
         snippet: this.replaceHtmlEntities(msg.snippet.trim()),
-        from: this.parseEmail(this.getHeader(msg, 'From')),
-        to: this.getHeader(msg, 'To'),
-        date: new Date(+msg.internalDate),
         code: msg.snippet.match(/\b\d{6}\b/)?.at(0)
       }
     })

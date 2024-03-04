@@ -1,5 +1,5 @@
 <main class="p-3">
-  <div *ngIf="userInfo" class="header">
+  <div *ngIf="userInfo" class="header mb-3">
     <div>Hello {{ userInfo.name }},</div>
     <div class="user d-flex ms-auto">
       <img src="{{ userInfo.picture }}" />
@@ -7,7 +7,6 @@
     </div>
   </div>
   <div>
-    <button (click)="click()">click</button>
     <div *ngIf="loading">loading...</div>
     <div class="email-list">
       <ng-container *ngFor="let c of codes">
@@ -17,7 +16,7 @@
             <label [title]="c.from?.value">{{
               c.from?.display || "N/A"
             }}</label>
-            <div class="ms-auto muted">{{ c.date | date : "short" }}</div>
+            <div class="ms-auto muted">{{ c.date }}</div>
           </div>
           <div class="d-flex">
             <div>{{ c.subject || "N/A" }}</div>
@@ -27,5 +26,6 @@
         </div>
       </ng-container>
     </div>
+    <button (click)="click()" class="btn btn-primary">get emails</button>
   </div>
 </main>
