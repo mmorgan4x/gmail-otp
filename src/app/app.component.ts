@@ -1,6 +1,6 @@
 import { ChangeDetectorRef, Component, } from '@angular/core';
 import { ApiService } from './api.service';
-import { gmail_v1, oauth2_v2 } from 'googleapis';
+import { Gmail, Oauth2 } from './types';
 
 @Component({
   selector: 'app-root',
@@ -12,37 +12,31 @@ export class AppComponent {
   loading: boolean = false;
   codes: string[]
   email: string
-  userInfo?: oauth2_v2.Schema$Userinfo;
-  messages?: gmail_v1.Schema$Message[] = []
+  userInfo?: Oauth2.UserInfo;
+  messages?: Gmail.Message[] = []
 
   constructor(private api: ApiService, private cdr: ChangeDetectorRef) { }
 
   async ngOnInit() {
     this.email = (await chrome.identity.getProfileUserInfo()).email;
-
-    chrome.identity.getAuthToken({ interactive: true }, async (token) => {
-      let user = await this.api.getUserInfo(token as string);
-      console.log(user)
-    })
+    this.userInfo = await this.api.getUserInfo();
+    this.cdr.detectChanges();
   }
 
   async click() {
     this.loading = true;
-    chrome.identity.getAuthToken({ interactive: true }, async (token) => {
 
-      let emailsIds = await this.api.getEmails(token as string).then(t => t.messages.map(s => s.id));
+    let emailsIds = await this.api.getEmails().then(t => t.messages.map(s => s.id));
 
-      this.messages = await Promise.all(emailsIds.map(t => this.api.getEmailById(t, token as string)));
-      console.log(emailsIds, this.messages)
-      this.loading = false;
-      this.cdr.detectChanges();
+    this.messages = await Promise.all(emailsIds.map(t => this.api.getEmailById(t)));
+    this.loading = false;
+    this.cdr.detectChanges();
 
-      //       const otpMatch = email.snippet.match(/\b\d{6}\b/);
-      //       if (otpMatch) {
-      //         otpCodes.push(otpMatch[0]);
-      //       }
-      //     });
+    //       const otpMatch = email.snippet.match(/\b\d{6}\b/);
+    //       if (otpMatch) {
+    //         otpCodes.push(otpMatch[0]);
+    //       }
+    //     });
 
-    });
   }
 }

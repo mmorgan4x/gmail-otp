@@ -1,15 +1,12 @@
-<!-- <div *ngIf="!isLoggedin">
-  <asl-google-signin-button
-    type="standard"
-    size="medium"
-  ></asl-google-signin-button>
-</div> -->
 <main class="p-3">
-  <!-- hello {{ userInfo?.name }} -->
+  <div *ngIf="userInfo">
+    <div>hello {{ userInfo.name }} {{ email }}</div>
+    <img src="{{ userInfo.picture }}" />
+  </div>
   <div>
     <button (click)="click()">click</button>
     <div *ngIf="loading">loading...</div>
-    <div class="bg-danger mb-1" *ngFor="let message of messages">
+    <div class="bg-info mb-1" *ngFor="let message of messages">
       {{ message.snippet }}
     </div>
   </div>
