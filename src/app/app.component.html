@@ -1,13 +1,15 @@
 <main class="p-3">
   <div *ngIf="userInfo">
-    <div>hello {{ userInfo.name }} {{ email }}</div>
+    <div>hello3 {{ userInfo.name }} {{ email }}</div>
     <img src="{{ userInfo.picture }}" />
   </div>
   <div>
     <button (click)="click()">click</button>
     <div *ngIf="loading">loading...</div>
-    <div class="bg-info mb-1" *ngFor="let message of messages">
-      {{ message.snippet }}
-    </div>
+    <div
+      class="bg-info mb-1"
+      *ngFor="let message of messages"
+      [innerHtml]="message.snippet | safeHtml"
+    ></div>
   </div>
 </main>
