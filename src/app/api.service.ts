@@ -16,9 +16,9 @@ export class ApiService {
     getUserInfo() {
         return firstValueFrom(this.http.get<Oauth2.UserInfo>(`${this.oauthApiUrl}/userinfo`));
     }
-    
+
     getEmails() {
-        let params = { maxResults: 10 };
+        let params = { maxResults: 10 }//, q: 'code' };
         return firstValueFrom(this.http.get<Gmail.ListMessagesResponse>(`${this.gmailApiUrl}/users/me/messages`, { params }));
     }
 

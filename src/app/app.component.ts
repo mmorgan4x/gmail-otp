@@ -10,7 +10,7 @@ import * as moment from 'moment';
 })
 export class AppComponent {
 
-  loading: boolean = false;
+  loading: boolean = true;
   codes: any[]
   email: string
   userInfo?: Oauth2.UserInfo;
@@ -19,30 +19,30 @@ export class AppComponent {
   constructor(private api: ApiService, private cdr: ChangeDetectorRef) { }
 
   async ngOnInit() {
+    this.load();
     this.email = (await chrome.identity.getProfileUserInfo()).email;
     this.userInfo = await this.api.getUserInfo();
-    this.cdr.detectChanges();
   }
 
-  async click() {
+  async load() {
     this.loading = true;
 
     let emailsIds = await this.api.getEmails().then(t => t.messages.map(s => s.id));
 
     this.messages = await Promise.all(emailsIds.map(t => this.api.getEmailById(t)));
     this.loading = false;
-    this.cdr.detectChanges();
     console.log(this.messages)
 
     this.codes = this.messages.map(msg => {
       return {
         msg: msg,
-        date: moment(+msg.internalDate).fromNow(),
+        date: new Date(+msg.internalDate),
         unread: msg.labelIds.includes('UNREAD'),
+        flagged: msg.labelIds.includes('STARRED'),
         from: this.parseEmail(this.getHeader(msg, 'From')),
         subject: this.getHeader(msg, 'Subject'),
         snippet: this.replaceHtmlEntities(msg.snippet.trim()),
-        code: msg.snippet.match(/\b\d{6}\b/)?.at(0)
+        code: `${this.getHeader(msg, 'Subject')} ${msg.snippet}`.match(/\b\d{6}\b/)?.at(0)
       }
     })
   }
@@ -53,13 +53,23 @@ export class AppComponent {
 
   parseEmail(email: string) {
     const match = email.match(/"?(.*?)"?\s<([^>]+)>/);
-    return { display: match?.at(1), value: match?.at(2) };
+    return { display: match?.at(1), value: match?.at(2), og: email };
   }
 
   replaceHtmlEntities(text: string) {
     const tempElement = document.createElement('div');
     tempElement.innerHTML = text;
     return tempElement.textContent || tempElement.innerText;
+  }
+
+  copy(inputEl: HTMLInputElement) {
+    inputEl.select();
+    navigator.clipboard.writeText(window.getSelection().toString());
+    // document.execCommand('copy');
+  }
+
+  async options() {
+    await new Promise<void>(r => chrome.runtime.openOptionsPage(r));
   }
 
 }
