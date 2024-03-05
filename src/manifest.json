@@ -1,7 +1,7 @@
 {
     "manifest_version": 3,
     "name": "OTP Scanner for Gmail",
-    "version": "1.0",
+    "version": "1.1",
     "description": "Scan Gmail for one-time-passwords for quick and easy copy/paste without leaving the website.",
     "icons": {
         "16": "assets/icon.png",

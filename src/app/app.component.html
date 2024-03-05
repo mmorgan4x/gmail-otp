@@ -26,11 +26,16 @@
               {{ c.date | fromNow }}
             </div>
           </div>
-          <div class="d-flex">
-            <div class="subject">{{ c.subject || "N/A" }}</div>
+          <div class="d-flex gap-1">
+            <div class="subject me-auto">{{ c.subject || "N/A" }}</div>
             <i
+              *ngIf="c.hasAttachment"
+              class="bi bi-paperclip muted"
+              title="has attachment"
+            ></i
+            ><i
               *ngIf="c.flagged"
-              class="bi bi-flag-fill ms-auto text-danger"
+              class="bi bi-flag-fill text-danger"
               title="flagged"
             ></i>
           </div>
@@ -58,7 +63,7 @@
 
   <footer class="bg-light text-muted">
     <div>OTP Scanner for Gmail</div>
-    <div class="ms-auto font-monospace">v1.0</div>
+    <div class="ms-auto font-monospace">v{{version}}</div>
   </footer>
   <div *ngIf="loading" class="loading">
     <div class="spinner-border"></div>

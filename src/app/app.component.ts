@@ -13,10 +13,12 @@ export class AppComponent {
   email: string
   userInfo?: Oauth2.UserInfo;
   codes: any[]
+  version: string;
 
   constructor(private api: ApiService) { }
 
   async ngOnInit() {
+    this.version = chrome.runtime.getManifest()['version'];
     this.load();
     this.email = (await chrome.identity.getProfileUserInfo()).email;
     this.userInfo = await this.api.getUserInfo();
@@ -37,6 +39,7 @@ export class AppComponent {
         date: new Date(+msg.internalDate),
         unread: msg.labelIds.includes('UNREAD'),
         flagged: msg.labelIds.includes('STARRED'),
+        hasAttachment: msg?.payload?.parts?.some(t => !!t?.filename),
         from: this.parseEmail(this.getHeader(msg, 'From')),
         subject: this.getHeader(msg, 'Subject'),
         snippet: this.replaceHtmlEntities(msg.snippet.trim()),

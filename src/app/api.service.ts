@@ -2,6 +2,7 @@ import { HttpClient, } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { firstValueFrom, } from 'rxjs';
 import { Gmail, Oauth2 } from './types';
+import * as moment from 'moment';
 
 @Injectable({
     providedIn: 'root',
@@ -18,7 +19,8 @@ export class ApiService {
     }
 
     getEmails() {
-        let params = { maxResults: 10 }//, q: 'code' };
+        // https://support.google.com/mail/answer/7190
+        let params = { maxResults: 10, q: `newer_than:1h` };
         return firstValueFrom(this.http.get<Gmail.ListMessagesResponse>(`${this.gmailApiUrl}/users/me/messages`, { params }));
     }
 
