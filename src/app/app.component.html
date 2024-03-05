@@ -1,8 +1,7 @@
 <main>
-  <div *ngIf="userInfo" class="header">
-    <!-- <div>Hello {{ userInfo.name }},</div> -->
+  <div class="header">
     <div class="user d-flex me-auto">
-      <img src="{{ userInfo.picture }}" />
+      <img src="{{ userInfo?.picture }}" />
       <div>{{ email }}</div>
     </div>
 
@@ -43,6 +42,7 @@
               readonly
               [ngModel]="c.code"
               #inputEl
+              (click)="copy(inputEl)"
             />
             <button class="btn btn-light btn-icon" (click)="copy(inputEl)">
               <i class="bi bi-copy"></i>

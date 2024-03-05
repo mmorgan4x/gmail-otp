@@ -1,7 +1,6 @@
-import { ChangeDetectorRef, Component, } from '@angular/core';
+import { Component, } from '@angular/core';
 import { ApiService } from './api.service';
 import { Gmail, Oauth2 } from './types';
-import * as moment from 'moment';
 
 @Component({
   selector: 'app-root',
@@ -10,13 +9,12 @@ import * as moment from 'moment';
 })
 export class AppComponent {
 
-  loading: boolean = true;
-  codes: any[]
+  loading = true;
   email: string
   userInfo?: Oauth2.UserInfo;
-  messages?: Gmail.Message[] = []
+  codes: any[]
 
-  constructor(private api: ApiService, private cdr: ChangeDetectorRef) { }
+  constructor(private api: ApiService) { }
 
   async ngOnInit() {
     this.load();
@@ -28,12 +26,12 @@ export class AppComponent {
     this.loading = true;
 
     let emailsIds = await this.api.getEmails().then(t => t.messages.map(s => s.id));
+    let messages = await Promise.all(emailsIds.map(t => this.api.getEmailById(t)));
+    console.log(messages)
 
-    this.messages = await Promise.all(emailsIds.map(t => this.api.getEmailById(t)));
     this.loading = false;
-    console.log(this.messages)
 
-    this.codes = this.messages.map(msg => {
+    this.codes = messages.map(msg => {
       return {
         msg: msg,
         date: new Date(+msg.internalDate),
