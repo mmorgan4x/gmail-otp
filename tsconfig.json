@@ -1,7 +1,6 @@
 {
   "compileOnSave": false,
   "compilerOptions": {
-    "baseUrl": "./",
     "outDir": "./dist/out-tsc",
     "forceConsistentCasingInFileNames": true,
     "noImplicitOverride": true,
@@ -19,7 +18,11 @@
     "useDefineForClassFields": false,
     "lib": ["ES2022", "dom"],
     "strictPropertyInitialization": false,
-    "types": ["chrome-types", "gapi"]
+    "types": ["chrome-types"],
+    "baseUrl": "./",
+    "paths": {
+      "@shared/*": ["./src/app/shared/*"]
+    }
   },
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,

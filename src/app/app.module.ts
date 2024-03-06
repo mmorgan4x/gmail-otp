@@ -1,12 +1,11 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { HTTP_INTERCEPTORS, HttpClient, HttpClientModule } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
-import { HTTP_INTERCEPTORS, HttpClient, HttpClientModule } from '@angular/common/http';
-import { TokenInterceptor } from './shared/token.interceptor';
-import { SharedModule } from './shared/shared.module';
 import { AppRoutingModule } from './app.routing';
-import { HashLocationStrategy, LocationStrategy } from '@angular/common';
+import { SharedModule } from '@shared/shared.module';
+import { TokenInterceptor } from '@shared/token.interceptor';
 
 @NgModule({
   imports: [
@@ -21,7 +20,6 @@ import { HashLocationStrategy, LocationStrategy } from '@angular/common';
   providers: [
     HttpClient,
     { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },
-    { provide: LocationStrategy, useClass: HashLocationStrategy }
   ],
   bootstrap: [AppComponent]
 })

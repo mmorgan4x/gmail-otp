@@ -1,8 +1,7 @@
 import { NgModule } from '@angular/core';
-
-import { FromNowPipe } from '../shared/from-now.pipe';
-import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { FromNowPipe } from '@shared/from-now.pipe';
 
 @NgModule({
   imports: [
