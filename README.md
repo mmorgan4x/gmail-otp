@@ -1,4 +1,4 @@
-# QuickPaste  [![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/N4N5BQ132)
+# OTP Scanner for Gmail [![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/N4N5BQ132)
 
 OTP Scanner Gmail lets you scan emails for one-time-passwords to quickly and easily copy/paste without leaving your website.
 

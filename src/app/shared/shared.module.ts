@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { FromNowPipe } from '@shared/from-now.pipe';
+import { PopupLinkDirective } from './popup-link.directive';
 
 @NgModule({
   imports: [
@@ -12,9 +13,11 @@ import { FromNowPipe } from '@shared/from-now.pipe';
     FormsModule,
     CommonModule,
     FromNowPipe,
+    PopupLinkDirective
   ],
   declarations: [
     FromNowPipe,
+    PopupLinkDirective
   ],
 
 })

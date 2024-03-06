@@ -3,6 +3,7 @@
     "name": "OTP Scanner for Gmail",
     "version": "1.1",
     "description": "Scan emails for one-time-passwords to quickly and easily copy/paste without leaving your website",
+    "homepage_url": "https://github.com/mmorgan4x/gmail-otp",
     "icons": {
         "16": "assets/icon.png",
         "48": "assets/icon.png",

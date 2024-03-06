@@ -15,12 +15,12 @@ export class PopupComponent {
   email: string
   userInfo?: Oauth2.UserInfo;
   codes: any[]
-  version: string;
+  version: string = chrome.runtime.getManifest()['version'];
+  homepageUrl: string = chrome.runtime.getManifest()['homepage_url'];
 
   constructor(private api: ApiService) { }
 
   async ngOnInit() {
-    this.version = chrome.runtime.getManifest()['version'];
     this.load();
     this.email = (await chrome.identity.getProfileUserInfo()).email;
     this.userInfo = await this.api.getUserInfo();
