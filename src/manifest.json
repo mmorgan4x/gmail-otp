@@ -9,9 +9,10 @@
         "128": "assets/icon.png"
     },
     "action": {
-        "default_popup": "index.html",
+        "default_popup": "/index.html#/popup",
         "default_icon": "assets/icon.png"
     },
+    "options_page": "/index.html#/options",
     "permissions": [
         "activeTab",
         "identity",

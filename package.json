@@ -4,8 +4,9 @@
   "scripts": {
     "ng": "ng",
     "start": "ng build --watch --configuration development",
+    "serve": "ng serve",
     "build": "ng build",
-    "zip": "cd dist/gmail-otp && bestzip ../../build.zip *"
+    "zip": "cd dist && bestzip ../build.zip *"
   },
   "private": true,
   "dependencies": {

@@ -1,0 +1,72 @@
+<main>
+    <div class="header">
+      <div class="user d-flex me-auto">
+        <img src="{{ userInfo?.picture }}" />
+        <div>{{ email }}</div>
+      </div>
+  
+      <button (click)="load()" class="btn btn-light btn-icon">
+        <i class="bi bi-arrow-clockwise"></i>
+      </button>
+      <button (click)="options()" class="btn btn-light btn-icon">
+        <i class="bi bi-gear"></i>
+      </button>
+    </div>
+  
+    <div class="px-3">
+      <div class="email-list">
+        <ng-container *ngFor="let c of codes">
+          <div class="email">
+            <div class="d-flex align-items-center">
+              <div *ngIf="c.unread" class="unread" title="unread"></div>
+              <label [title]="c.from?.value">{{
+                c.from?.display || c.from?.og || "N/A"
+              }}</label>
+              <div class="ms-auto muted" [title]="c.date ">
+                {{ c.date | fromNow }}
+              </div>
+            </div>
+            <div class="d-flex gap-1">
+              <div class="subject me-auto">{{ c.subject || "N/A" }}</div>
+              <i
+                *ngIf="c.hasAttachment"
+                class="bi bi-paperclip muted"
+                title="has attachment"
+              ></i
+              ><i
+                *ngIf="c.flagged"
+                class="bi bi-flag-fill text-danger"
+                title="flagged"
+              ></i>
+            </div>
+            <div class="snippet muted" [title]="c.snippet">{{ c.snippet }}</div>
+            <!-- <div *ngIf="c.code" class="code text-success mt-2">{{ c.code }}</div> -->
+            <div *ngIf="c.code" class="mt-2 code">
+              <input
+                class="form-control text-success"
+                readonly
+                [ngModel]="c.code"
+                #inputEl
+                (click)="copy(inputEl)"
+              />
+              <button class="btn btn-light btn-icon" (click)="copy(inputEl)">
+                <i class="bi bi-copy"></i>
+              </button>
+            </div>
+          </div>
+        </ng-container>
+      </div>
+      <div class="text-center">
+        <button class="btn btn-link" (click)="load()">load more...</button>
+      </div>
+    </div>
+  
+    <footer class="bg-light text-muted">
+      <div>OTP Scanner for Gmail</div>
+      <div class="ms-auto font-monospace">v{{version}}</div>
+    </footer>
+    <div *ngIf="loading" class="loading">
+      <div class="spinner-border"></div>
+    </div>
+  </main>
+  
