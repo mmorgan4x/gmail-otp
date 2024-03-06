@@ -14,7 +14,7 @@ export class PopupComponent {
   loading = true;
   email: string
   userInfo?: Oauth2.UserInfo;
-  codes: any[]
+  codes: any[] = [];
   version: string = chrome.runtime.getManifest()['version'];
   homepageUrl: string = chrome.runtime.getManifest()['homepage_url'];
 
@@ -29,7 +29,7 @@ export class PopupComponent {
   async load() {
     this.loading = true;
 
-    let emailsIds = await this.api.getEmails().then(t => t.messages.map(s => s.id));
+    let emailsIds = (await this.api.getEmails())?.messages?.map(s => s.id) || [];
     let messages = await Promise.all(emailsIds.map(t => this.api.getEmailById(t)));
     console.log(messages)
 
@@ -48,6 +48,11 @@ export class PopupComponent {
         code: `${this.getHeader(msg, 'Subject')} ${msg.snippet}`.match(/\b\d{6}\b/)?.at(0)
       }
     })
+  }
+
+  loadMore() {
+    // TODO
+    this.load();
   }
 
   getHeader(msg: Gmail.Message, name: string) {

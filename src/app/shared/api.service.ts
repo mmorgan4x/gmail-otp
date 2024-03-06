@@ -19,7 +19,7 @@ export class ApiService {
 
     getEmails() {
         // https://support.google.com/mail/answer/7190
-        let params = { maxResults: 10 }//, q: `newer_than:1h` };
+        let params = { maxResults: 10, q: 'newer_than:2h' };
         return firstValueFrom(this.http.get<Gmail.ListMessagesResponse>(`${this.gmailApiUrl}/users/me/messages`, { params }));
     }
 

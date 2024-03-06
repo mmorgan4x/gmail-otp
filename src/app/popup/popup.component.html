@@ -15,49 +15,47 @@
 
   <div class="px-3">
     <div class="email-list">
-      <ng-container *ngFor="let c of codes">
-        <div class="email">
-          <div class="d-flex align-items-center">
-            <div *ngIf="c.unread" class="unread" title="unread"></div>
-            <label [title]="c.from?.value">{{
-              c.from?.display || c.from?.og || "N/A"
-            }}</label>
-            <div class="ms-auto muted" [title]="c.date | date : 'short'">
-              {{ c.date | fromNow }}
-            </div>
-          </div>
-          <div class="d-flex gap-1">
-            <div class="subject me-auto">{{ c.subject || "N/A" }}</div>
-            <i
-              *ngIf="c.hasAttachment"
-              class="bi bi-paperclip muted"
-              title="has attachment"
-            ></i
-            ><i
-              *ngIf="c.flagged"
-              class="bi bi-flag-fill text-danger"
-              title="flagged"
-            ></i>
-          </div>
-          <div class="snippet muted" [title]="c.snippet">{{ c.snippet }}</div>
-          <!-- <div *ngIf="c.code" class="code text-success mt-2">{{ c.code }}</div> -->
-          <div *ngIf="c.code" class="mt-2 code">
-            <input
-              class="form-control text-success"
-              readonly
-              [ngModel]="c.code"
-              #inputEl
-              (click)="copy(inputEl)"
-            />
-            <button class="btn btn-light btn-icon" (click)="copy(inputEl)">
-              <i class="bi bi-copy"></i>
-            </button>
+      <div class="email" *ngFor="let c of codes">
+        <div class="d-flex align-items-center">
+          <div *ngIf="c.unread" class="unread" title="unread"></div>
+          <label [title]="c.from?.value">{{
+            c.from?.display || c.from?.og || "N/A"
+          }}</label>
+          <div class="ms-auto muted" [title]="c.date | date : 'short'">
+            {{ c.date | fromNow }}
           </div>
         </div>
-      </ng-container>
+        <div class="d-flex gap-1">
+          <div class="subject me-auto" [title]="c.subject">{{ c.subject || "N/A" }}</div>
+          <i
+            *ngIf="c.hasAttachment"
+            class="bi bi-paperclip muted"
+            title="has attachment"
+          ></i
+          ><i
+            *ngIf="c.flagged"
+            class="bi bi-flag-fill text-danger"
+            title="flagged"
+          ></i>
+        </div>
+        <div class="snippet muted" [title]="c.snippet">{{ c.snippet }}</div>
+        <div *ngIf="c.code" class="mt-2 code">
+          <input
+            class="form-control text-success"
+            readonly
+            [ngModel]="c.code"
+            #inputEl
+            (click)="copy(inputEl)"
+          />
+          <button class="btn btn-light btn-icon" (click)="copy(inputEl)">
+            <i class="bi bi-copy"></i>
+          </button>
+        </div>
+      </div>
     </div>
-    <div class="text-center">
-      <button class="btn btn-link" (click)="load()">load more...</button>
+    <div *ngIf="!codes.length" class="muted text-center py-3">No messages</div>
+    <div class="text-center" *ngIf="codes.length">
+      <button class="btn btn-link" (click)="loadMore()">load more...</button>
     </div>
   </div>
 
