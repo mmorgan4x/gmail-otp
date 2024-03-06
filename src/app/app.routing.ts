@@ -2,8 +2,8 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
-  { path: 'popup', loadChildren: () => import('./popup/popup.module').then((m) => m.PopupModule) },
-  { path: 'options', loadChildren: () => import('./options/options.module').then((m) => m.OptionsModule) },
+  { path: 'popup', loadComponent: () => import('./popup/popup.component').then((m) => m.PopupComponent) },
+  { path: 'options', loadComponent: () => import('./options/options.component').then((m) => m.OptionsComponent) },
 ];
 
 @NgModule({

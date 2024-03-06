@@ -23,6 +23,9 @@
             "polyfills": [
               "zone.js"
             ],
+            "allowedCommonJsDependencies": [
+              "moment"
+            ],
             "tsConfig": "tsconfig.json",
             "inlineStyleLanguage": "scss",
             "assets": [
