@@ -5,7 +5,7 @@ import { HTTP_INTERCEPTORS, HttpClient, HttpClientModule } from '@angular/common
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app.routing';
 import { SharedModule } from '@shared/shared.module';
-import { TokenInterceptor } from '@shared/token.interceptor';
+import { TokenInterceptor } from '@shared/interceptors/token.interceptor';
 
 @NgModule({
   imports: [

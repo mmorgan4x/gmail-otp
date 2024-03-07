@@ -21,7 +21,8 @@
     "types": ["chrome-types"],
     "baseUrl": "./",
     "paths": {
-      "@shared/*": ["./src/app/shared/*"]
+      "@shared/*": ["./src/app/shared/*"],
+      "@services/*": ["./src/app/services/*"]
     }
   },
   "angularCompilerOptions": {

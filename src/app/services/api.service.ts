@@ -1,7 +1,7 @@
 import { HttpClient, } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { firstValueFrom, } from 'rxjs';
-import { Gmail, Oauth2 } from './types';
+import { Gmail, Oauth2 } from '@shared/models/types';
 
 @Injectable({
     providedIn: 'root',

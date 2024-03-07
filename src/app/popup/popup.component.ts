@@ -1,7 +1,7 @@
 import { Component, } from '@angular/core';
 import { SharedModule } from '@shared/shared.module';
-import { ApiService } from '@shared/api.service';
-import { Gmail, Oauth2 } from '@shared/types';
+import { ApiService } from '@services/api.service';
+import { Gmail, Oauth2 } from '@shared/models/types';
 
 @Component({
   templateUrl: './popup.component.html',
